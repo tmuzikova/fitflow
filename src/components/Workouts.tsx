@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { WorkoutCard } from "./WorkoutCard";
 
-// Define the structure of a Strava activity based on Strava's API
-interface StravaActivity {
-  id: number;
-  name: string;
-  distance: number;
-  moving_time: number;
-  elapsed_time: number;
-  total_elevation_gain: number;
-  type: string;
-  start_date: string;
-  start_date_local: string;
-  // Add other relevant fields if needed
-}
+import { WorkoutCard } from "./WorkoutCard";
+import { StravaActivity } from "./types";
 
 export const Workouts: React.FC = () => {
   const [activities, setActivities] = useState<StravaActivity[]>([]);
@@ -23,6 +11,9 @@ export const Workouts: React.FC = () => {
   const refreshToken = import.meta.env.VITE_STRAVA_REFRESH_TOKEN;
 
   useEffect(() => {
+    //REAUTHORIZING -> NEED TO GET A NEW ACCESS TOKEN
+    //access token = short-lived, expires after a few hours for safety reasons, needed for API calls
+    //refresh token = long-lived, used to request  a new access token from the authorization server
     const reAuthorize = async (): Promise<void> => {
       const authLink = "https://www.strava.com/oauth/token";
       const reauth_response = await fetch(authLink, {
@@ -48,6 +39,7 @@ export const Workouts: React.FC = () => {
       getActivities(reauth_data.access_token);
     };
 
+    //FETCHING ACTIVITIES (info: https://developers.strava.com/docs/reference/#api-Activities-getLoggedInAthleteActivities)
     const getActivities = async (access_token: string): Promise<void> => {
       const activities_link = `https://www.strava.com/api/v3/athlete/activities?access_token=${access_token}`;
       const activities_response = await fetch(activities_link);
@@ -62,7 +54,7 @@ export const Workouts: React.FC = () => {
     };
 
     reAuthorize();
-  });
+  }, []);
 
   return (
     <div>

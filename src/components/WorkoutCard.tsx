@@ -1,19 +1,8 @@
 import React from "react";
 
-// Define the props based on the StravaActivity interface
-interface WorkoutCardProps {
-  id: number;
-  name: string;
-  distance: number;
-  moving_time: number;
-  elapsed_time: number;
-  total_elevation_gain: number;
-  type: string;
-  start_date: string;
-  start_date_local: string;
-}
+import { StravaActivity } from "./types";
 
-export const WorkoutCard: React.FC<WorkoutCardProps> = (props) => {
+export const WorkoutCard: React.FC<StravaActivity> = (props) => {
   return (
     <li>
       <h3>{props.name}</h3>
