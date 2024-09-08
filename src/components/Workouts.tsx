@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { WorkoutCard } from "./WorkoutCard";
 import { StravaActivity } from "./types";
+import { SectionWrapper } from "../hoc";
 
-export const Workouts: React.FC = () => {
+const Workouts: React.FC = () => {
   const [activities, setActivities] = useState<StravaActivity[]>([]);
 
   const clientId = import.meta.env.VITE_STRAVA_CLIENT_ID;
@@ -56,18 +57,22 @@ export const Workouts: React.FC = () => {
     reAuthorize();
   }, []);
 
+  console.log(activities[1]);
+
   return (
     <div>
       <h2>Workouts</h2>
       {activities.length > 0 ? (
-        <ul>
+        <div className="flex flex-wrap justify-between">
           {activities.map((activity) => (
             <WorkoutCard key={activity.id} {...activity} />
           ))}
-        </ul>
+        </div>
       ) : (
-        <p>No workouts available</p>
+        <span className="loading loading-spinner loading-lg"></span>
       )}
     </div>
   );
 };
+
+export default SectionWrapper(Workouts, "workouts");
