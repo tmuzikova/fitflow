@@ -1,4 +1,6 @@
 {
   "navbar_home": "Domů",
-  "navbar_workouts": "Aktivity"
+  "navbar_workouts": "Aktivity",
+  "navbar_generator": "Silový trénink",
+  "navbar_coach": "Trenér"
 }

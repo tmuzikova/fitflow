@@ -1,4 +1,6 @@
 {
   "navbar_home": "Home",
-  "navbar_workouts": "Activities"
+  "navbar_workouts": "Activities",
+  "navbar_generator": "Strength Training",
+  "navbar_coach": "Coach"
 }

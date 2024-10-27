@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { menu, close } from "../assets";
-import { navLinks } from "../constants/constants";
+import { NAVLINKS } from "../constants/constants";
 import { styles } from "../styles";
 import { LanguageSelector } from "./language/LanguageSelector";
 
@@ -13,11 +13,11 @@ export const NavBar = () => {
 
   return (
     <nav
-      className={`${styles.paddingX} w-full flex bg-black items-center py-5  fixed top-0 z-20 transition-all duration-300`}
+      className={`${styles.paddingX} w-full flex bg-darkPrimary items-center py-5  fixed top-0 z-20 transition-all duration-300`}
     >
       <div className=" w-full flex justify-end  max-w-7xl mx-auto">
         <div className="hidden sm:flex flex-row gap-10">
-          {navLinks.map((link) => (
+          {NAVLINKS.map((link) => (
             <Link
               to={link.path}
               key={link.id}
@@ -48,7 +48,7 @@ export const NavBar = () => {
             } pt-20 p-6 bg-black absolute top-0 right-0 w-full h-screen z-10 flex justify-center items-center`}
           >
             <div className="flex items-center flex-col gap-4">
-              {navLinks.map((link) => (
+              {NAVLINKS.map((link) => (
                 <Link
                   to={link.path}
                   key={link.id}

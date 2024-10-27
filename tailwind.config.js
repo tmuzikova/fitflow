@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        darkPrimary: "#1B1B1B",
+        darkPrimary: "#181818",
         darkSecondary: "#2C2C2E",
         darkTertiary: "#3C3C43",
         ascent: "#0A84FF",
@@ -17,6 +17,9 @@ export default {
       },
       boxShadow: {
         card: "0px 35px 120px -10px #211e35",
+      },
+      backgroundImage: {
+        "hero-pattern": "url('/src/assets/fitflow_bg.png')",
       },
     },
   },

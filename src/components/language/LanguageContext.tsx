@@ -5,8 +5,8 @@ export interface LanguageContextType {
   setLanguage: React.Dispatch<React.SetStateAction<string>>;
 }
 export const LanguageContext = createContext<LanguageContextType>({
-  language: "cs", // Default language is set to Czech
-  setLanguage: () => {}, // This is a no-op function to avoid errors if the provider is not used
+  language: "cs", // default language is set to czech
+  setLanguage: () => {},
 });
 
 interface LanguageProviderProps {

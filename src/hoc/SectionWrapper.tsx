@@ -10,6 +10,7 @@ export const SectionWrapper = (
         <span className="hash-span" id={idName}>
           &nbsp;
         </span>
+
         <Component />
       </section>
     );

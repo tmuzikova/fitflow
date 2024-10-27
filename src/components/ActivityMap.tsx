@@ -1,8 +1,8 @@
-import React from "react";
-import { GoogleMap, Polyline, useLoadScript } from "@react-google-maps/api";
+import React, { useEffect } from "react";
+import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 import polyline from "@mapbox/polyline";
-
-const googleApiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+import L from "leaflet";
 
 interface ActivityMapProps {
   polyline: string | null;
@@ -11,38 +11,45 @@ interface ActivityMapProps {
 export const ActivityMap: React.FC<ActivityMapProps> = ({
   polyline: encodedPolyline,
 }) => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: googleApiKey,
-  });
-
-  if (!isLoaded) return <div>Loading...</div>;
   if (!encodedPolyline) return <div>No map data available</div>;
 
-  // Decode the polyline
-  const path = polyline
-    .decode(encodedPolyline)
-    .map(([lat, lng]) => ({ lat, lng }));
+  const FitBoundsPolyline = ({
+    positions,
+  }: {
+    positions: [number, number][];
+  }) => {
+    const map = useMap();
+    useEffect(() => {
+      if (positions.length > 0) {
+        const bounds = L.latLngBounds(positions);
+        map.fitBounds(bounds);
+      }
+    }, [map, positions]);
 
-  console.log("Decoded path:", path);
+    return (
+      <Polyline
+        positions={positions}
+        pathOptions={{ color: "#0A84FF", weight: 4, opacity: 0.5 }}
+      />
+    );
+  };
+
+  // decode the polyline
+  const path: [number, number][] = polyline
+    .decode(encodedPolyline)
+    .map(([lat, lng]: [number, number]) => [lat, lng]);
 
   return (
-    <GoogleMap
-      mapContainerStyle={{
-        height: "300px",
-        width: "100%",
-        position: "relative",
-      }}
-      zoom={14}
-      center={path[0]} // Center map on the first point in the polyline
+    <MapContainer
+      center={path[0]} // centers map on the first point of the polyline
+      zoom={15}
+      style={{ height: "350px", width: "400px", borderRadius: "6px" }}
     >
-      <Polyline
-        path={path}
-        options={{
-          strokeColor: "000000",
-          strokeOpacity: 1,
-          strokeWeight: 200,
-        }}
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-    </GoogleMap>
+      <FitBoundsPolyline positions={path} />
+    </MapContainer>
   );
 };
